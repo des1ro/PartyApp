@@ -1,4 +1,4 @@
-import { prisma } from "../../utils/prismaClient";
+import { prisma } from "../../utils/prisma/prismaClient";
 import { CategoryError } from "./error/category.exceptions";
 import { CategoryDTO } from "./categoryDTO";
 

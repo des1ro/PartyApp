@@ -1,4 +1,4 @@
-import { prisma } from "../../../utils/prismaClient";
+import { prisma } from "../../../utils/prisma/prismaClient";
 import { UserError } from "../error/user.exceptions";
 import { UserDTO } from "../user.type";
 import { hashPassword } from "./userPasswordHasher";

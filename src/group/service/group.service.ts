@@ -1,4 +1,4 @@
-import { prisma } from "../../../utils/prismaClient";
+import { prisma } from "../../../utils/prisma/prismaClient";
 import { GroupError } from "../error/group.exceptions";
 import { Group } from "../group.type";
 

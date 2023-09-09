@@ -1,7 +1,3 @@
-import { CategoryDTO } from "../category/categoryDTO";
-import { Group } from "../group/group.type";
-import { UserDTO } from "../user/user.type";
-
 export type Trip = {
   title: string;
   Place: string[];
