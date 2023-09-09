@@ -1,12 +1,44 @@
 {
   "name": "partyapp",
   "version": "1.0.0",
-  "description": "app for trips",
+  "description": "<div align=\"center\">   <img width=\"512\" src=\"https://raw.githubusercontent.com/adamsmichal/boilerplate_ts_node_prisma_docker/main/banner.png\" alt=\"prisma-docker\"> </div>",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "npx tsc",
+    "start": "node dist/index.js",
+    "dev": "concurrently --kill-others-on-fail \"npx tsc --watch\" \"nodemon -q dist/index.js\" \"npm run dev:db",
+    "dev:db": "docker-compose up"
   },
-  "keywords": [],
-  "author": "des1ro",
-  "license": "ISC"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/des1ro/Trip-Friend.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/des1ro/Trip-Friend/issues"
+  },
+  "homepage": "https://github.com/des1ro/Trip-Friend#readme",
+  "dependencies": {
+    "@prisma/client": "^5.2.0",
+    "bcrypt": "^5.1.1",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "express-async-errors": "^3.1.1",
+    "firebase": "^10.3.1",
+    "joi": "^17.10.0",
+    "ts-node": "^10.9.1"
+  },
+  "devDependencies": {
+    "@types/bcrypt": "^5.0.0",
+    "@types/cors": "^2.8.13",
+    "@types/express": "^4.17.17",
+    "@types/node": "^20.5.7",
+    "concurrently": "^8.2.1",
+    "nodemon": "^3.0.1",
+    "prisma": "^5.2.0",
+    "tslint": "^6.1.3",
+    "typescript": "^5.2.2"
+  },
+  "keywords": []
 }
