@@ -1,4 +1,4 @@
-import { prisma } from "../../../utils/prismaClient";
+import { prisma } from "../../../utils/prisma/prismaClient";
 import { TripError } from "../error/trip.exceptions";
 import { Trip } from "../tripDTO";
 
