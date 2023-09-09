@@ -1,0 +1,12 @@
+{
+  "name": "partyapp",
+  "version": "1.0.0",
+  "description": "app for trips",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "des1ro",
+  "license": "ISC"
+}
