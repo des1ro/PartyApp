@@ -20,6 +20,19 @@ export class UserController {
       res.status(500).json({ message: typedError });
     }
   }
+  static async deleteUserByEmail(req: Request, res: Response) {
+    const email = req.params.email;
+    try {
+      await UserService.deleteUserByEmail(email);
+    } catch (error) {
+      if (error instanceof UserError) {
+        res.status(409).json({ name: error.name, message: error.message });
+        return;
+      }
+      const typedError = error as DataBaseError;
+      res.status(500).json({ message: typedError });
+    }
+  }
   static async getAll(req: Request, res: Response) {
     try {
       const users = await UserService.getAllUsers();

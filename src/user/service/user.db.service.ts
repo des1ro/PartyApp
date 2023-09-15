@@ -1,4 +1,4 @@
-import { prisma } from "../../../utils/prisma/prismaClient";
+import { prisma } from "../../../prisma/prismaClient";
 import { UserError } from "../error/user.exceptions";
 import { UserDTO } from "../user.type";
 import { hashPassword } from "./userPasswordHasher";
@@ -33,6 +33,7 @@ export class UserService {
       },
     });
   }
+
   static async getUserByEmail(email: string) {
     const user = await prisma.user.findUnique({
       where: { email: email },
@@ -59,7 +60,16 @@ export class UserService {
 
     return user ? true : false;
   }
-
+  static async deleteUserByEmail(email: string) {
+    const exist = await this.ifUserExistByEmail(email);
+    if (exist) {
+      await prisma.user.delete({
+        where: {
+          email: email,
+        },
+      });
+    }
+  }
   static async getAllUsers() {
     return await prisma.user.findMany();
   }

@@ -2,7 +2,7 @@ export type Trip = {
   title: string;
   Place: string[];
   authorTripId: string;
-  categoryId: string;
+  category: string;
   published?: boolean;
   attractions?: string[];
   pictures?: string[];
