@@ -8,44 +8,24 @@ datasource db {
 }
 
 model User {
-  uuid        String        @id @default(uuid())
+  uuid        String       @id @default(uuid())
   name        String
   dateOfBirth Int?
-  email       String        @unique
-  phoneNumber String?       @unique
+  email       String       @unique
+  phoneNumber String?      @unique
   password    String
-  createdAt   DateTime      @default(now())
-  updatedAt   DateTime      @updatedAt
-  role        Role          @default(USER)
-  Group       Group[]
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  role        Role         @default(USER)
   Trip        Trip[]
   Comment     Comment[]
   UserToTrip  UserToTrip[]
-  UserToGroup UserToGroup[]
-}
-
-model Category {
-  uuid  String @id @default(uuid())
-  name  String @unique
-  group Trip[]
+  expenses    Expenses[]
 }
 
 enum Role {
   USER
   ADMIN
-}
-
-model Group {
-  uuid          String        @id @default(uuid())
-  title         String        @unique
-  published     Boolean       @default(true)
-  author        User          @relation(fields: [authorGroupId], references: [uuid])
-  authorGroupId String
-  views         Int           @default(0)
-  likes         Int           @default(0)
-  comments      Comment[]
-  Trip          Trip[]
-  UserToGroup   UserToGroup[]
 }
 
 model Trip {
@@ -62,11 +42,22 @@ model Trip {
   DateofTrip   String?
   views        Int          @default(0)
   likes        Int          @default(0)
-  Group        Group[]
-  category     Category     @relation(fields: [categoryId], references: [uuid])
+  category     String
+  expenses     Expenses[]
   comments     Comment[]
   UserToTrip   UserToTrip[]
-  categoryId   String
+}
+
+model Expenses {
+  id          String   @id @default(uuid())
+  amount      Float
+  description String
+  user        User     @relation(fields: [userId], references: [uuid])
+  userId      String
+  trip        Trip     @relation(fields: [tripId], references: [uuid])
+  tripId      String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
 
 model Comment {
@@ -78,8 +69,6 @@ model Comment {
   updatedAt DateTime @updatedAt
   Trip      Trip?    @relation(fields: [tripId], references: [uuid])
   tripId    String?
-  Group     Group?   @relation(fields: [groupId], references: [uuid])
-  groupId   String?
 }
 
 model UserToTrip {
@@ -89,13 +78,4 @@ model UserToTrip {
   trip   Trip   @relation(fields: [tripId], references: [uuid])
 
   @@id([userId, tripId])
-}
-
-model UserToGroup {
-  userId  String
-  user    User   @relation(fields: [userId], references: [uuid])
-  groupId String
-  group   Group  @relation(fields: [groupId], references: [uuid])
-
-  @@id([userId, groupId])
 }
