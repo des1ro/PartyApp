@@ -1,5 +1,4 @@
 import Joi from "joi";
-import { UserDTO } from "./user/user.type";
 
 const schema = Joi.object({
   username: Joi.string().alphanum().min(3).max(30).required(),
@@ -14,7 +13,7 @@ async function checkver(check: any) {
   //   } else {
   //     // Dane spełniają warunki walidacji
   //     console.log("Przetworzone dane:", value);
-  //   }
+  //   }assad
 }
 const value = {
   name: "M12ic2u",

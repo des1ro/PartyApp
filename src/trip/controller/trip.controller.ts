@@ -1,13 +1,19 @@
 import { DataBaseError } from "../../database/error/database.exceptions";
 import { TripError } from "../error/trip.exceptions";
 import { Trip } from "../tripDTO";
-import { TripService } from "./trip.db.service";
+import { TripService } from "../service/trip.db.service";
 import { Request, Response } from "express";
 
 export class TripController {
   static async getAllTrips(req: Request, res: Response) {
     const trips = await TripService.getAllTrips();
-    res.json(trips);
+    const data = {
+      pageTitle: "Trips",
+      message: "Witaj na mojej stronie!",
+      trips: trips,
+      authenticated: req.oidc.isAuthenticated(),
+    };
+    res.render("trips", data);
   }
   static async createTrip(req: Request, res: Response) {
     const data: Trip = req.body;
@@ -54,8 +60,17 @@ export class TripController {
   }
   static async getTripByTitle(req: Request, res: Response) {
     try {
-      const user = await TripService.getTripByTitle(req.body.title);
-      res.status(200).send({ user });
+      const trip = await TripService.getTripByTitle(req.params.title);
+      if (trip) {
+        const data = {
+          pageTitle: "Trips",
+          message: "Witaj na mojej stronie!",
+          trip: trip,
+          authenticated: req.oidc.isAuthenticated(),
+        };
+        res.render("trip", data);
+        return;
+      }
     } catch (error) {
       res.status(404).send(`Error: ${error}`);
     }

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/styles.css" />
+    <link rel="stylesheet" href="/css/navbar.css" />
+  </head>
+  <body>
+    <!-- Pasek nawigacyjny -->
+    <header class="navbar" id="navbar">
+      <div class="navbar-content">
+        <a href="/">
+          <img src="/logo.png" alt="Logo" class="logo" />
+        </a>
+        <nav class="nav-links">
+          <a href="/">Trips in progress</a>
+          <a href="/page1">Propositions</a>
+          <a href="/api/trips">All Trip</a>
+          <a href="/page3">Memes</a>
+          <a href="/page4">Settings</a>
+        </nav>
+        <% if (authenticated) { %>
+        <a href="/logout" class="logout-button top-right-button">Logout</a>
+        <!-- Przycisk wylogowania z ładnym stylem -->
+        <% } else { %>
+        <a href="/login" class="login-button top-right-button">Login</a>
+        <!-- Przycisk logowania z ładnym stylem -->
+        <% } %>
+      </div>
+    </header>
+<!-- 
+    <div class="parallax">
+      <div class="container">
+        <!-- Wycentrowane elementy -->
+      </div>
+    </div> -->
+
+    <script src="/js/navbar.js"></script>
+    <!-- Dodaj link do pliku navbar.js -->
+  </body>
+</html>

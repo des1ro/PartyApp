@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('layout') %>
+
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/styles.css" />
+
+    <title><%= pageTitle %></title>
+  </head>
+  <body>
+    <div class="parallax">
+      <div class="container">
+        <!-- Wycentrowane elementy -->
+        <h1><%= pageTitle %></h1>
+        <p><%= message %></p>
+
+        <!-- Lista tripów -->
+        <ul class="trips-container">
+          <% trips.forEach((trip) => { %>
+          <li class="trip">
+            <a href="./trip/<%= trip.title %>">
+              <!-- Wyświetl zawartość trip -->
+              <h2><%= trip.title %></h2>
+              <p><%= trip.Place.join(', ') %></p>
+              <!-- itd. -->
+            </a>
+          </li>
+          <% }); %>
+        </ul>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { TripController } from "./service/trip.controller";
+import { TripController } from "./controller/trip.controller";
 const routes = Router();
 routes.get("/trip/:title?", TripController.getTripByTitle);
 routes.get("/trips", TripController.getAllTrips);
