@@ -1,7 +1,15 @@
 import Joi from "joi";
 import { Request, Response, NextFunction } from "express";
 export class UserValidator {
-  static async validate(
+  async createUser(req: Request, res: Response, next: NextFunction) {
+    const schema = validateSchema.create;
+    await this.validate(req, res, next, schema);
+  }
+  async updateUser(req: Request, res: Response, next: NextFunction) {
+    const schema = validateSchema.update;
+    await this.validate(req, res, next, schema);
+  }
+  private async validate(
     req: Request,
     res: Response,
     next: NextFunction,
@@ -19,14 +27,6 @@ export class UserValidator {
           .json({ error: "An unknown error occurred in user validation" });
       }
     }
-  }
-  static async createUser(req: Request, res: Response, next: NextFunction) {
-    const schema = validateSchema.create;
-    await UserValidator.validate(req, res, next, schema);
-  }
-  static async updateUser(req: Request, res: Response, next: NextFunction) {
-    const schema = validateSchema.update;
-    await UserValidator.validate(req, res, next, schema);
   }
 }
 const commonFields = {

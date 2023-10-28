@@ -4,7 +4,7 @@ import { UserDTO } from "../user.type";
 import { hashPassword } from "./userPasswordHasher";
 
 export class UserService {
-  static async createUser(newUser: UserDTO) {
+  async createUser(newUser: UserDTO) {
     const isInDatabaseEmail = await this.ifUserExistByEmail(newUser.email);
     const isInDatabasePhoneNumber = await this.ifUserExistByEmail(newUser.email);
     if (isInDatabaseEmail || isInDatabasePhoneNumber) {
@@ -16,7 +16,7 @@ export class UserService {
     newUser.password = await hashPassword(newUser.password);
     await prisma.user.create({ data: newUser });
   }
-  static async updateUserByEmail(email: string, data: UserDTO) {
+  async updateUserByEmail(email: string, data: UserDTO) {
     const itAlreadyExist = await this.getUserByEmail(email);
     if (itAlreadyExist === null) {
       throw new UserError({ name: "UPDATE_USER_ERROR", message: "User don't exist" });
@@ -34,7 +34,7 @@ export class UserService {
     });
   }
 
-  static async getUserByEmail(email: string) {
+  async getUserByEmail(email: string) {
     const user = await prisma.user.findUnique({
       where: { email: email },
     });
@@ -46,21 +46,21 @@ export class UserService {
     }
     return user;
   }
-  static async ifUserExistByEmail(email: string): Promise<boolean> {
+  async ifUserExistByEmail(email: string): Promise<boolean> {
     const user = await prisma.user.findUnique({
       where: { email: email },
     });
 
     return user ? true : false;
   }
-  static async ifUserExistByPhoneNumber(phoneNumber: string): Promise<boolean> {
+  async ifUserExistByPhoneNumber(phoneNumber: string): Promise<boolean> {
     const user = await prisma.user.findUnique({
       where: { phoneNumber: phoneNumber },
     });
 
     return user ? true : false;
   }
-  static async deleteUserByEmail(email: string) {
+  async deleteUserByEmail(email: string) {
     const exist = await this.ifUserExistByEmail(email);
     if (exist) {
       await prisma.user.delete({
@@ -70,7 +70,7 @@ export class UserService {
       });
     }
   }
-  static async getAllUsers() {
+  async getAllUsers() {
     return await prisma.user.findMany();
   }
 }

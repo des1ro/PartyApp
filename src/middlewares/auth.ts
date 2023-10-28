@@ -26,5 +26,10 @@ export function authorization(req: Request, res: Response, next: NextFunction) {
     next();
     return;
   }
-  res.status(401).send("Validation error :c \n Please log in c:");
+  const data = {
+    pageTitle: "Not logged",
+    message: "Witaj na mojej stronie!",
+    authenticated: req.oidc.isAuthenticated(),
+  };
+  res.render("authError", data);
 }

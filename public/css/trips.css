@@ -1,0 +1,61 @@
+@media screen and (max-width: 768px) {
+  /* Zwiększ rozmiar czcionki dla napisów na małych ekranach */
+  .trips-container {
+    display: grid;
+    justify-content: center !important;
+  }
+  .trip {
+    justify-content: space-around !important;
+    width: 400px !important;
+    height: 150px;
+    box-sizing: content-box;
+  }
+} /* Styl dla trips-container */
+.trips-container {
+  list-style: none; /* Usunięcie domyślnych kropek */
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 20px;
+  margin-right: 30px;
+}
+
+/* Styl dla pojedynczego trip */
+.trip {
+  background-color: #e0e0e0;
+  padding: 20px;
+  border-radius: 10px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  margin-left: 20px;
+  margin-right: 20px;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.2);
+  width: 32vw;
+
+  height: 150px;
+  box-sizing: border-box;
+  transition: background-color 0.3s;
+
+  /* Dodaj animację po najechaniu */
+  transition: background-color 0.3s, transform 0.2s;
+  cursor: pointer;
+}
+
+.trip:hover {
+  transform: scale(1.05); /* Powiększenie elementu po najechaniu */
+  display: flexbox;
+}
+
+/* Styl dla tekstu w obramówce białej */
+.trip a {
+  text-decoration: none;
+  color: rgb(207, 203, 203);
+  text-shadow: 2px 4px 4px rgba(0, 0, 0); /* Dodanie cienia do tekstu */
+  width: 100%; /* Ustaw szerokość na 100% */
+  display: flexbox;
+}
+
+.trip:hover {
+  background-color: #e0e0e0;
+  display: flexbox;
+}

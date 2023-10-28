@@ -1,0 +1,11 @@
+.center-video {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Ustawia wysokość na całą wysokość ekranu (viewport height) */
+}
+
+/* Stylowanie dla wideo */
+.center-video iframe {
+  max-width: 100%; /* Maksymalna szerokość wideo na ekranie */
+}

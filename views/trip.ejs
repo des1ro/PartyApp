@@ -1,22 +1,22 @@
-<!DOCTYPE html>
-<html lang="en">
+
   <%- include('layout') %>
-
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="/css/styles.css" />
-
     <title><%= pageTitle %></title>
-  </head>
   <body>
-    <div class="container">
-      <div class="trip">
-        <h2><%= trip.title %></h2>
+    <div class="trips-container">
+      <div class="container">
+        <h1><%= trip.title %></h1>
         <ul>
-          <% for (const key in trip) { %>
-          <li><strong><%= key %>:</strong> <%= trip[key] %></li>
-          <% } %>
+          <h2>Places: <%= trip.Place %></h2>
+
+          <h2>Atractions: <%= trip.atractions %></h2>
+          <!-- <h2>Pictures: <%= trip.pictures %></h2> -->
+          <h2>Date of trip: <%= trip.DateofTrip %></h2>
+          <h2>Category: <%= trip.category %></h2>
+          <h2><%= trip.views %> Views</h2>
+          <h2><%= trip.likes %> Likes</h2>
+          <h2>Author: <%= trip.authorTripId %></h2>
+          <h2>Create: <%= trip.createdAt %></h2>
+          <h2>Last Update: <%= trip.updatedAt %></h2>
         </ul>
       </div>
     </div>

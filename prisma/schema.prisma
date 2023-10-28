@@ -46,6 +46,7 @@ model Trip {
   expenses     Expenses[]
   comments     Comment[]
   UserToTrip   UserToTrip[]
+  isInProgress Boolean?     @default(false)
 }
 
 model Expenses {

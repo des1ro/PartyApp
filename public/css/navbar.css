@@ -1,33 +1,41 @@
 /* Styl dla paska nawigacyjnego */
-.navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 20px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  z-index: 1;
-  position: sticky;
+@media screen and (max-width: 768px) {
+  /* Zwiększ rozmiar czcionki dla napisów na małych ekranach */
+  .nav-links a {
+    font-size: 4vw; /* Dostosuj rozmiar czcionki */
+    margin: auto !important; /* Dostosuj marginesy */
+  }
+  .login-button,
+  .logout-button {
+    width: 50px !important; /* Szerokość obrazka */
+  }
+  .nav-button {
+    width: 40px !important;
+  }
+  .navbar-scroll-up {
+    padding: 0 10px !important;
+  }
+}
+.navbarhead {
+  margin: 0;
+  padding: 0;
+  width: auto;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
   top: 0;
   transition: 0.6s;
-  background-color: rgba(0, 0, 0, 0); /* Przezroczyste tło na początku */
+  background-color: rgba(255, 255, 255, 0); /* Przezroczyste tło na początku */
 }
 
 /* Pozostałe style jak wcześniej */
 
-.navbar-scroll-up {
-  background-color: rgba(5, 1, 221, 0.8); /* Kolor tła po przewinięciu strony w górę */
-}
-
 .nav-links a {
-  margin-right: 100px; /* Odstęp między przyciskami */
   text-decoration: none;
   color: #333; /* Kolor tekstu */
   font-weight: bold;
   transition: color 0.3s; /* Animacja zmiany koloru tekstu */
   width: 15vw; /* Skaluje się względem szerokości widoku przeglądania */
   height: 10vh; /* Skaluje się względem wysokości widoku przeglądania */
-  margin: 1vw; /* Działa w oparciu o szerokość widoku przeglądania */
-  font-size: 1vw; /* Skaluje się względem szerokości widoku przeglądania */
+  margin-right: 6vw; /* Działa w oparciu o szerokość widoku przeglądania */
 }
 
 .nav-links a:hover {
@@ -35,10 +43,10 @@
 }
 
 .navbar-content {
-  max-width: 1200px; /* Maksymalna szerokość zawartości paska */
+  max-width: 100%; /* Maksymalna szerokość zawartości paska */
   margin: 0 auto; /* Wycentrowanie zawartości paska */
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
   padding: 0 20px; /* Dodaj odpowiednie wypełnienie */
 }
@@ -48,8 +56,28 @@
     255,
     255,
     255,
-    0.2
+    0.8
   ); /* Lekko przezroczysty kolor przy przewijaniu w górę */
-  padding: 0 20px; /* Dodaj odpowiednie wypełnienie */
+  padding: 0 20px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Dodaj cień */
+}
+.login-button,
+.logout-button {
+  width: 80px; /* Szerokość obrazka */
+  transition: transform 0.2s ease-in-out;
+}
+.login-button:hover {
+  opacity: 0.8;
+  transform: scale(1.1);
+}
+
+.logout-button:hover {
+  opacity: 0.8;
+}
+
+.top-right-button hover {
+  color: #ffffff;
+}
+.nav-button {
+  width: 60px;
 }

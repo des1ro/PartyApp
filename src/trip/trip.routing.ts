@@ -1,9 +1,10 @@
 import { Router } from "express";
 import { TripController } from "./controller/trip.controller";
 const routes = Router();
-routes.get("/trip/:title?", TripController.getTripByTitle);
-routes.get("/trips", TripController.getAllTrips);
-routes.post("/trip/:userId?", TripController.createTrip);
-routes.put("/trip", TripController.updateTripByTitle);
-routes.delete("/trip/:title", TripController.deleteTripByTitle);
+const tripController = new TripController();
+routes.get("/trip/:uuid?", tripController.getTripByUuid);
+routes.get("/trips/:propos?", tripController.getAllTrips);
+routes.post("/trip/", tripController.createTrip);
+routes.put("/trip", tripController.updateTripByUuid);
+routes.delete("/trip/:uuid?", tripController.deleteTripByUuid);
 export default routes;

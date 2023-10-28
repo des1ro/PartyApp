@@ -1,4 +1,5 @@
 export type Trip = {
+  uuid: string;
   title: string;
   Place: string[];
   authorTripId: string;

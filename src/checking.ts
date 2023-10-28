@@ -1,26 +1,25 @@
-import Joi from "joi";
+import { TripService } from "./trip/service/trip.db.service";
 
-const schema = Joi.object({
-  username: Joi.string().alphanum().min(3).max(30).required(),
-  age: Joi.number().integer().min(18).max(99).required(),
-});
-async function checkver(check: any) {
-  const { error, value } = await schema.validateAsync(check);
+class TripController {
+  constructor(private readonly tripService = new TripService()) {}
 
-  //   if (error) {
-  //     // Dane nie spełniają warunków walidacji
-  //     console.log("Błąd walidacji:", error.details[0].message);
-  //   } else {
-  //     // Dane spełniają warunki walidacji
-  //     console.log("Przetworzone dane:", value);
-  //   }assad
+  async getAllTrips() {
+    try {
+      const trips = await this.tripService.getAllTrips();
+      const data = {
+        pageTitle: "Trips",
+        message: "Witaj na mojej stronie!",
+        trips: trips,
+      };
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 }
-const value = {
-  name: "M12ic2u",
-  dateOfBirth: 1966,
-  phonenumber: 2324212312,
-  email: "m1swefa2sd@cz11d.com",
-  password: "pieskii3333kotki",
+const service = new TripController();
+const users = async () => {
+  const user = await service.getAllTrips();
 };
 
-checkver(value);
+users();

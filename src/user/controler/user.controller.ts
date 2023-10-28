@@ -3,13 +3,14 @@ import { UserService } from "../service/user.db.service";
 import { UserError } from "../error/user.exceptions";
 import { DataBaseError } from "../../database/error/database.exceptions";
 export class UserController {
-  static async getAllUsers(req: Request, res: Response) {
-    const users = await UserService.getAllUsers();
+  constructor(private readonly userService = new UserService()) {}
+  async getAllUsers(req: Request, res: Response) {
+    const users = await this.userService.getAllUsers();
     res.json(users);
   }
-  static async createUser(req: Request, res: Response) {
+  async createUser(req: Request, res: Response) {
     try {
-      await UserService.createUser(req.body);
+      await this.userService.createUser(req.body);
       res.status(201).send("User created");
     } catch (error) {
       if (error instanceof UserError) {
@@ -20,10 +21,10 @@ export class UserController {
       res.status(500).json({ message: typedError });
     }
   }
-  static async deleteUserByEmail(req: Request, res: Response) {
+  async deleteUserByEmail(req: Request, res: Response) {
     const email = req.params.email;
     try {
-      await UserService.deleteUserByEmail(email);
+      await this.userService.deleteUserByEmail(email);
     } catch (error) {
       if (error instanceof UserError) {
         res.status(409).json({ name: error.name, message: error.message });
@@ -33,19 +34,19 @@ export class UserController {
       res.status(500).json({ message: typedError });
     }
   }
-  static async getAll(req: Request, res: Response) {
+  async getAll(req: Request, res: Response) {
     try {
-      const users = await UserService.getAllUsers();
+      const users = await this.userService.getAllUsers();
       res.status(200).send(users);
     } catch (error) {
       res.status(500).json({ message: "Internal server error:", error });
     }
   }
-  static async updateUserByEmail(req: Request, res: Response) {
+  async updateUserByEmail(req: Request, res: Response) {
     const data = req.body;
     const email = req.body.email;
     try {
-      await UserService.updateUserByEmail(email, data);
+      await this.userService.updateUserByEmail(email, data);
     } catch (error) {
       if (error instanceof UserError) {
         res.status(409).json({ name: error.name, message: error.message });
@@ -55,9 +56,9 @@ export class UserController {
       res.status(500).json({ message: typedError });
     }
   }
-  static async getUserByEmail(req: Request, res: Response) {
+  async getUserByEmail(req: Request, res: Response) {
     try {
-      const user = await UserService.getUserByEmail(req.body.email);
+      const user = await this.userService.getUserByEmail(req.body.email);
       res.status(200).send({ user });
     } catch (error) {
       res.status(404).send(`Error: ${error}`);
