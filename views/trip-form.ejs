@@ -1,27 +1,45 @@
 <%- include('layout') %>
 <div class="parallax">
-  <div class="container">
+  <div class="container-user">
     <h1><img src="/folder.png" title="New Trip" class="nav-button" /></h1>
     <form action="/api/trip" method="post" enctype="multipart/form-data">
       <div class="mb-3">
         <label for="title" class="form-label">Title</label>
-        <input type="text" class="form-control" id="title" name="title" required />
+        <input
+          type="text"
+          class="form-control"
+          id="title"
+          name="title"
+          placeholder="Some title for trip"
+          required
+        />
       </div>
       <div class="mb-3">
-        <label for="places" class="form-label">Places</label>
-        <div class="container" id="placesContainer">
+        <label for="title" class="form-label">Place</label>
+        <input
+          type="text"
+          class="form-control"
+          id="place"
+          name="place"
+          placeholder="Where?"
+          required
+        />
+      </div>
+      <div class="mb-3">
+        <label for="attractions" class="form-label">Attractions</label>
+        <div class="container" id="attractions-Container">
           <!-- Kontener dla miejsc -->
         </div>
       </div>
-      <div class="mb-3">
+      <div class="mb-3 ml-1">
         <div class="input-group">
           <input
             type="text"
             class="form-control"
-            id="newPlace"
-            placeholder="Add a new place"
+            id="newAttraction"
+            placeholder="Add a new Attraction"
           />
-          <button class="btn btn-primary" type="button" id="addPlace">Add</button>
+          <button class="btn btn-primary" type="button" id="addAttraction">Add</button>
         </div>
       </div>
 
@@ -94,17 +112,6 @@
       </div>
 
       <div class="mb-3">
-        <label for="pictures" class="form-label">Pictures</label>
-        <input
-          type="file"
-          class="form-control"
-          id="pictures"
-          name="pictures"
-          accept="image/*"
-          multiple
-        />
-      </div>
-      <div class="mb-3">
         <label for="friendsList" class="form-label">Friends to trip</label>
         <div id="friendsList" class="container">
           <!-- Pusta lista na początku, zostanie uzupełniona dynamicznie przez skrypt JavaScript -->
@@ -121,7 +128,17 @@
         </select>
       </div>
       <!-- Lista znajomych -->
-
+      <div class="mb-3">
+        <label for="pictures" class="form-label">Pictures</label>
+        <input
+          type="file"
+          class="form-control"
+          id="pictures"
+          name="pictures"
+          accept="image/*"
+          multiple
+        />
+      </div>
       <div class="mb-3 form-check">
         <div class="form-check form-switch form-check-reverse">
           <label class="form-check-label" for="published">Published?</label>
@@ -141,4 +158,5 @@
     </form>
   </div>
 </div>
+
 <script src="/js/trip-form.js"></script>

@@ -1,28 +1,34 @@
 <%- include('layout') %>
 <link rel="stylesheet" href="/css/video.css" />
 <main>
-  <% if(authenticated){ %>
-  <h1>
-    Hi! <br />
-    Here you have actual trips <br />
-    Have fun!
-  </h1>
-  <% } else{ %>
-  <h1>
-    Log in, create a profile,<br />
-    add trip suggestions,<br />
-    create groups and add interested people to them.<br />
-    The website allows you to calculate common expenses, <br />add photos, plan trips
-    and,<br />
-    above all, it is a great place as <br />an album to remember unforgettable adventures
-    :) <br />
-    Make a test account and try!
-  </h1>
-  <!-- Wycentrowane wideo -->
-  <div class="center-video">
+  <div class="parallax">
     <div class="container">
-      <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ"></iframe>
+      <% if(authData.authenticated){ %>
+
+      <h1>
+        Hi! <br />
+        Here you have actual trips <br />
+        Have fun!
+      </h1>
+      <% } else{ %>
+
+      <h1>
+        Log in, create a profile,<br />
+        add trip suggestions,<br />
+        create groups and add interested people to them.<br />
+        The website allows you to calculate common expenses, <br />add photos, plan trips
+        and,<br />
+        above all, it is a great place as <br />an album to remember unforgettable
+        adventures :) <br />
+        Make a test account and try!
+      </h1>
     </div>
+    <!-- Wycentrowane wideo -->
+    <div class="center-video">
+      <div class="container-video">
+        <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe>
+      </div>
+    </div>
+    <% } %>
   </div>
-  <% } %>
 </main>

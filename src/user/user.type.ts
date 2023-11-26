@@ -1,7 +1,10 @@
 export type UserDTO = {
-  readonly name: string;
-  dateOfBirth?: number;
+  uuid: string;
+  firstName: string;
+  lastName: string;
+  dateOfBirth?: Date | null;
   email: string;
-  password: string;
-  phoneNumber?: string;
+  phoneNumber: string;
+
+  picture?: string | null;
 };

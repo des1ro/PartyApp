@@ -1,12 +1,17 @@
-import { Router } from "express";
-import { UserValidator } from "../../middlewares/validateUserInput";
+import { Request, Response, Router } from "express";
 import { UserController } from "../controler/user.controller";
 const userController = new UserController();
-const validator = new UserValidator();
 const routes = Router();
-routes.get("/user/:id?", userController.getUserByEmail);
-routes.get("/users", userController.getAllUsers);
-routes.post("/user", validator.createUser, userController.createUser);
-routes.put("/:id", validator.updateUser, userController.updateUserByEmail);
-routes.delete("/user/:email?", userController.deleteUserByEmail);
+
+routes.get("/my-profile/", async (req: Request, res: Response) => {
+  userController.getUser(req, res);
+});
+routes.post("/user", async (req: Request, res: Response) => {
+  console.log("EKI");
+
+  userController.createUser(req, res);
+});
+routes.post("/user/update", async (req: Request, res: Response) => {
+  userController.updateUser(req, res);
+});
 export default routes;

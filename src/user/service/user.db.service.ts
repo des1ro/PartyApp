@@ -1,35 +1,36 @@
 import { prisma } from "../../../prisma/prismaClient";
 import { UserError } from "../error/user.exceptions";
 import { UserDTO } from "../user.type";
-import { hashPassword } from "./userPasswordHasher";
 
 export class UserService {
   async createUser(newUser: UserDTO) {
-    const isInDatabaseEmail = await this.ifUserExistByEmail(newUser.email);
-    const isInDatabasePhoneNumber = await this.ifUserExistByEmail(newUser.email);
-    if (isInDatabaseEmail || isInDatabasePhoneNumber) {
+    const user = await this.isUserExist(newUser);
+    if (!user) {
       throw new UserError({
         name: "CREATE_USER_ERROR",
         message: "Email or phone number already taken",
       });
     }
-    newUser.password = await hashPassword(newUser.password);
     await prisma.user.create({ data: newUser });
   }
-  async updateUserByEmail(email: string, data: UserDTO) {
-    const itAlreadyExist = await this.getUserByEmail(email);
-    if (itAlreadyExist === null) {
+  async updateUser(data: UserDTO) {
+    const uuid = data.uuid;
+    const isExist = await this.findUserBySub(uuid);
+    if (!isExist) {
       throw new UserError({ name: "UPDATE_USER_ERROR", message: "User don't exist" });
     }
+
     await prisma.user.update({
       where: {
-        email: email,
+        uuid: uuid,
       },
       data: {
-        name: data.name,
+        firstName: data.firstName,
+        lastName: data.lastName,
         dateOfBirth: data.dateOfBirth,
         email: data.email,
         phoneNumber: data.phoneNumber,
+        picture: data.picture,
       },
     });
   }
@@ -46,31 +47,24 @@ export class UserService {
     }
     return user;
   }
-  async ifUserExistByEmail(email: string): Promise<boolean> {
-    const user = await prisma.user.findUnique({
-      where: { email: email },
+  async isUserExist(userToFind: UserDTO): Promise<boolean> {
+    const user = await prisma.user.findMany({
+      where: {
+        OR: [{ email: userToFind.email }, { phoneNumber: userToFind.phoneNumber }],
+      },
     });
 
     return user ? true : false;
-  }
-  async ifUserExistByPhoneNumber(phoneNumber: string): Promise<boolean> {
-    const user = await prisma.user.findUnique({
-      where: { phoneNumber: phoneNumber },
-    });
-
-    return user ? true : false;
-  }
-  async deleteUserByEmail(email: string) {
-    const exist = await this.ifUserExistByEmail(email);
-    if (exist) {
-      await prisma.user.delete({
-        where: {
-          email: email,
-        },
-      });
-    }
   }
   async getAllUsers() {
     return await prisma.user.findMany();
+  }
+
+  async findUserBySub(sub: string) {
+    const user = await prisma.user.findUnique({ where: { uuid: sub } });
+    if (user?.dateOfBirth) {
+      user.dateOfBirth = user.dateOfBirth;
+    }
+    return user;
   }
 }

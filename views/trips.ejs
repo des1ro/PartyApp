@@ -4,34 +4,31 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="/css/trips.css" />
-  <link rel="stylesheet" href="/css/modal.css" />
 
-  <title><%= pageTitle %></title>
+  <title>Trips</title>
 </head>
 <main>
   <div class="parallax">
     <ul class="trips-container">
       <% trips.forEach((trip) => { %> <% if ((propos == 'propostrue' && trip.published) ||
       (propos == 'proposfalse' && !trip.published)) { %>
+
       <li class="trip" style="background-image: url('<%= trip.pictures[0] %>')">
         <a href="/api/trip/<%= trip.uuid %>">
           <h2><%= trip.title %></h2>
-          <p><%= trip.Place.join(', ') %></p>
+          <p><%= trip.place.join(', ') %></p>
         </a>
       </li>
       <% } %> <% }); %> <% if (propos == 'propostrue') { %>
       <li
         class="trip"
-        
         style="
           background-image: url('https://d3rr2gvhjw0wwy.cloudfront.net/uploads/mandators/27199/file-manager/adventure-tourism.jpg');
         "
-        
       >
-        <h2><a href="/">Create Trip</a></h2>
+        <h2><a href="/api/trip-form">Create Trip</a></h2>
       </li>
     </ul>
-  <%} %>
-
-  <script src="/js/modal.js"></script>
+    <%} %>
+  </div>
 </main>

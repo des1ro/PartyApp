@@ -3,33 +3,32 @@ import dotenv from "dotenv";
 import routes from "./global.routing";
 import { auth } from "express-openid-connect";
 import path from "path";
-import { config, profile } from "./middlewares/auth";
-
+import authMiddleware, { authConfig } from "./middlewares/auth0";
+import fileUpload from "express-fileupload";
 dotenv.config();
 const app: Express = express();
 const port = process.env.PORT;
+//Auth0
+app.use(auth(authConfig));
+app.use(authMiddleware);
 
-app.use(auth(config));
-app.use(express.json()); // To handle req.body
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(
+  fileUpload({
+    useTempFiles: true,
+    tempFileDir: "/tmp/",
+    limits: { fileSize: 10 * 1024 * 1024 },
+  }),
+);
 app.use("/api", routes);
 app.use(express.static(path.join(process.cwd(), "public")));
-// Ustawienie EJS jako widok silnika
 app.set("view engine", "ejs");
-// Middleware do serwowania plików statycznych (CSS, JS, itp.)
-app.use(express.urlencoded({ extended: true }));
-// Czytanie formularzy post z ejs
 app.set("views", path.join(process.cwd(), "views"));
 
-app.listen(port, () => {
-  console.log(`Server is running at http://localhost:${port}`);
-});
-app.get("/profile", profile);
-
 app.get("/", (req: Request, res: Response) => {
-  const data = {
-    pageTitle: "TripApp",
-    authenticated: req.oidc.isAuthenticated(),
-  };
-
-  res.render("strona", data);
+  res.render("index");
+});
+const server = app.listen(port, () => {
+  console.log(`Server is running at http://localhost:${port}`);
 });

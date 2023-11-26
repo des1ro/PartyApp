@@ -5,15 +5,19 @@
       <img src="/logo.png" alt="Logo" class="logo" />
     </a>
     <nav class="nav-links">
-      <% if (authenticated) { %>
+      <% if (authData.authenticated) { %>
       <a href="/api/trips/propostrue"
         ><img src="/calendar.png" title="Propositions" class="nav-button"
       /></a>
       <a href="/api/trips/proposfalse"
         ><img src="/trees.png" title="Compleated Trips" class="nav-button"
       /></a>
-      <a href="/page3"><img src="/folder.png" title="Memories" class="nav-button" /></a>
-      <a href="/page4"><img src="/spanner.png" title="Settings" class="nav-button" /></a>
+      <a href="/api/friends/<%= authData.uuid %>"
+        ><img src="/contact-book.png" title="Friends" class="nav-button"
+      /></a>
+      <a href="/api/my-profile"
+        ><img src="/spanner.png" title="Settings" class="nav-button"
+      /></a>
     </nav>
 
     <a href="/logout">

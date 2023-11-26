@@ -1,13 +1,14 @@
-export type Trip = {
-  uuid: string;
+export type TripDTO = {
+  uuid?: string;
   title: string;
-  Place: string[];
-  authorTripId: string;
-  category: string;
+  place: string[];
   published?: boolean;
+  authorTripId: string;
   attractions?: string[];
   pictures?: string[];
-  DateofTrip: string | null;
+  startOfTrip?: Date;
+  endOfTrip?: Date;
   views?: number;
-  likes?: number;
+  category: string[];
+  isInProgress?: boolean;
 };
