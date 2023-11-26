@@ -1,0 +1,78 @@
+@media screen and (max-width: 768px) {
+  /* Zwiększ rozmiar czcionki dla napisów na małych ekranach */
+
+  .logo {
+    max-width: 70px !important; /* Dostosuj szerokość logo do swoich potrzeb */
+    margin: right 1px; /* Dodaj odstęp między logo a menu */
+  }
+  .parallax {
+    margin-top: 30% !important;
+    max-width: 100%;
+  }
+}
+h1 {
+  font-size: large;
+  text-align: center;
+}
+h2 {
+  font-size: medium;
+}
+html {
+  position: relative;
+}
+body {
+  background-image: url("../background.jpg"); /* Ścieżka do obrazu tła */
+  background-size: cover; /* Dopasowanie tła do rozmiaru okna przeglądarki */
+  background-position: center; /* Wyśrodkowanie tła */
+  background-attachment: fixed; /* Tło zostaje statyczne */
+  padding-bottom: 100px;
+}
+.parallax {
+  margin-top: 10%;
+  max-width: 100%;
+}
+#main {
+  overflow: auto;
+  padding-bottom: 150px; /* this needs to be bigger than footer height*/
+}
+
+.container {
+  background: rgba(255, 255, 255, 0.7);
+  padding: 20px;
+  border-radius: 10px;
+  position: static;
+  z-index: 1;
+}
+.container-trip-form {
+  max-width: fit-content;
+}
+.container-user {
+  background: rgba(255, 255, 255, 0.7);
+  padding: 20px;
+  border-radius: 10px;
+  position: static;
+  z-index: 1;
+  max-width: fit-content;
+  text-align: center;
+  margin: 0 auto;
+}
+
+.logo {
+  max-width: 100px; /* Dostosuj szerokość logo do swoich potrzeb */
+  margin: right 1px; /* Dodaj odstęp między logo a menu */
+}
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.image {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 50%; /* Ustawienie na 50% tworzy okrągłe zdjęcie */
+}
+h2 {
+  font-family: Arial, Helvetica, sans-serif;
+}

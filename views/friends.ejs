@@ -1,0 +1,166 @@
+<%- include('layout') %>
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+  integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+  crossorigin="anonymous"
+/>
+
+<title>Friends</title>
+<main>
+  <!-- friends.ejs -->
+  <link rel="stylesheet" href="/css/friends.css" />
+  <div class="parallax">
+    <div class="accordion container" id="accordionExample">
+      <div class="card">
+        <div class="card-header text-center" id="headingOne">
+          <h2 class="mb-0">
+            <button
+              class="btn btn-link"
+              type="button"
+              data-toggle="collapse"
+              data-target="#collapseOne"
+              aria-expanded="false"
+              aria-controls="collapseOne"
+            >
+              <img src="/friends.png" class="image-small float-left" srcset="" />
+            </button>
+          </h2>
+        </div>
+
+        <div
+          id="collapseOne"
+          class="collapse show"
+          aria-labelledby="headingOne"
+          data-parent="#accordionExample"
+        >
+          <div class="card-body container overflow-auto" style="max-height: 400px">
+            <h2 class="text-center">Friends</h2>
+            <% for (user of friendsData) { %>
+            <div class="mb-2 friend-container text-center">
+              <!-- User Image -->
+              <img src="<%= user.picture || "/blank-profile.png" %>" alt="<%=
+              user.firstName %>'s profile picture" class="image" />
+
+              <!-- User Details -->
+              <div class="mt-2">
+                <h5><%= user.firstName %> <%= user.lastName %></h5>
+                <p><%= user.email %></p>
+                <p>Tel: <%= user.phoneNumber %></p>
+              </div>
+
+              <!-- Remove Button -->
+              <form action="/api/friends/delete/<%= user.uuid %>" method="post">
+                <button type="submit" class="btn btn-danger btn-sm mt-2">Remove</button>
+              </form>
+            </div>
+            <% } %>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header text-center" id="headingTwo">
+          <h2 class="mb-0">
+            <button
+              class="btn btn-link collapsed"
+              type="button"
+              data-toggle="collapse"
+              data-target="#collapseTwo"
+              aria-expanded="false"
+              aria-controls="collapseTwo"
+            >
+              <img src="/recived.png" class="image-small float-left" srcset="" />
+            </button>
+          </h2>
+        </div>
+        <div
+          id="collapseTwo"
+          class="collapse"
+          aria-labelledby="headingTwo"
+          data-parent="#accordionExample"
+        >
+          <div class="card-body container overflow-auto" style="max-height: 400px">
+            <% for (user of recivedRequestsFriends) { %>
+            <div class="mb-2 friend-container text-center">
+              <!-- User Image -->
+              <img src="<%= user.picture || "/blank-profile.png" %>" alt="<%=
+              user.firstName %>'s profile picture" class="image" />
+
+              <!-- User Details -->
+              <div class="mt-2">
+                <h5><%= user.firstName %> <%= user.lastName %></h5>
+                <p><%= user.email %></p>
+                <p>Tel: <%= user.phoneNumber %></p>
+              </div>
+
+              <!-- Remove Button -->
+              <form action="/api/friends/delete/<%= user.uuid %>" method="post">
+                <button type="submit" class="btn btn-danger btn-sm mt-2">Remove</button>
+              </form>
+            </div>
+            <% } %>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header text-center" id="headingThree">
+          <h2 class="mb-0">
+            <button
+              class="btn btn-link collapsed"
+              type="button"
+              data-toggle="collapse"
+              data-target="#collapseThree"
+              aria-expanded="false"
+              aria-controls="collapseThree"
+            >
+              <img src="/sent.png" class="image-small float-left" srcset="" />
+            </button>
+          </h2>
+        </div>
+        <div
+          id="collapseThree"
+          class="collapse"
+          aria-labelledby="headingThree"
+          data-parent="#accordionExample"
+        >
+          <div class="card-body container overflow-auto" style="max-height: 400px">
+            <% for (user of sentRequestsFriends) { %>
+            <div class="mb-2 friend-container text-center">
+              <!-- User Image -->
+              <img src="<%= user.picture || "/blank-profile.png" %>" alt="<%=
+              user.firstName %>'s profile picture" class="image" />
+
+              <!-- User Details -->
+              <div class="mt-2">
+                <h5><%= user.firstName %> <%= user.lastName %></h5>
+                <p><%= user.email %></p>
+                <p>Tel: <%= user.phoneNumber %></p>
+              </div>
+
+              <!-- Remove Button -->
+              <form action="/api/friends/delete/<%= user.uuid %>" method="post">
+                <button type="submit" class="btn btn-danger btn-sm mt-2">Cancel</button>
+              </form>
+            </div>
+            <% } %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+<script
+  src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+  integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+  crossorigin="anonymous"
+></script>
+<script
+  src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js"
+  integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+  crossorigin="anonymous"
+></script>
+<script
+  src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"
+  integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+  crossorigin="anonymous"
+></script>

@@ -1,0 +1,144 @@
+<%- include('layout') %>
+<div class="parallax">
+  <div class="container">
+    <h1><img src="/folder.png" title="New Trip" class="nav-button" /></h1>
+    <form action="/api/trip" method="post" enctype="multipart/form-data">
+      <div class="mb-3">
+        <label for="title" class="form-label">Title</label>
+        <input type="text" class="form-control" id="title" name="title" required />
+      </div>
+      <div class="mb-3">
+        <label for="places" class="form-label">Places</label>
+        <div class="container" id="placesContainer">
+          <!-- Kontener dla miejsc -->
+        </div>
+      </div>
+      <div class="mb-3">
+        <div class="input-group">
+          <input
+            type="text"
+            class="form-control"
+            id="newPlace"
+            placeholder="Add a new place"
+          />
+          <button class="btn btn-primary" type="button" id="addPlace">Add</button>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Category</label>
+
+        <input
+          type="checkbox"
+          class="btn-check"
+          id="btncheck1"
+          name="category"
+          value="Adventure"
+          autocomplete="off"
+        />
+        <label class="btn btn-outline-primary" for="btncheck1"> Adventure </label
+        ><input
+          type="checkbox"
+          class="btn-check"
+          id="btncheck2"
+          name="category"
+          value="Relax"
+          autocomplete="off"
+        />
+        <label class="btn btn-outline-primary" for="btncheck2"> Relax </label
+        ><input
+          type="checkbox"
+          class="btn-check"
+          id="btncheck3"
+          name="category"
+          value="Culture"
+          autocomplete="off"
+        />
+        <label class="btn btn-outline-primary" for="btncheck3"> Culture </label
+        ><input
+          type="checkbox"
+          class="btn-check"
+          id="btncheck4"
+          name="category"
+          value="Nature"
+          autocomplete="off"
+        />
+        <label class="btn btn-outline-primary" for="btncheck4"> Nature </label>
+        <input
+          type="radio"
+          class="btn-check"
+          id="btncheck5"
+          name="category"
+          value="Short"
+          autocomplete="off"
+        />
+        <label class="btn btn-outline-primary" for="btncheck5"> Short Trip </label
+        ><input
+          type="radio"
+          class="btn-check"
+          id="btncheck6"
+          name="category"
+          value="Long"
+          autocomplete="off"
+        />
+        <label class="btn btn-outline-primary" for="btncheck6"> Long Trip </label>
+        <input
+          type="checkbox"
+          class="btn-check"
+          id="btncheck7"
+          name="category"
+          value="Other"
+          autocomplete="off"
+        />
+        <label class="btn btn-outline-primary" for="btncheck7"> Other</label>
+      </div>
+
+      <div class="mb-3">
+        <label for="pictures" class="form-label">Pictures</label>
+        <input
+          type="file"
+          class="form-control"
+          id="pictures"
+          name="pictures"
+          accept="image/*"
+          multiple
+        />
+      </div>
+      <div class="mb-3">
+        <label for="friendsList" class="form-label">Friends to trip</label>
+        <div id="friendsList" class="container">
+          <!-- Pusta lista na początku, zostanie uzupełniona dynamicznie przez skrypt JavaScript -->
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="usersToAdd" class="form-label">Friends</label>
+        <select class="form-select" id="usersToAdd" name="usersToAdd[]" multiple>
+          <% for (const user of users) { %>
+          <option value="<%= user.uuid %>" data-picture="<%= user.picture %>">
+            <%= user.firstName %> <%= user.lastName %>
+          </option>
+          <% } %>
+        </select>
+      </div>
+      <!-- Lista znajomych -->
+
+      <div class="mb-3 form-check">
+        <div class="form-check form-switch form-check-reverse">
+          <label class="form-check-label" for="published">Published?</label>
+          <input
+            class="form-check-input"
+            type="checkbox"
+            id="published"
+            name="published"
+            checked
+          />
+        </div>
+      </div>
+
+      <div class="text-center">
+        <button type="submit" class="btn btn-primary">Create Trip</button>
+      </div>
+    </form>
+  </div>
+</div>
+<script src="/js/trip-form.js"></script>
