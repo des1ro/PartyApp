@@ -1,50 +1,88 @@
 import { prisma } from "../../../prisma/prismaClient";
 import { TripError } from "../error/trip.exceptions";
-import { Trip } from "../tripDTO";
+import { TripDTO } from "../tripDTO";
+import { uploadPhotoArray } from "../../utils/cloudinary";
 
 export class TripService {
-  static async addTripToDb(Trip: Trip) {
-    const checkIfExits = await this.getTripByTitle(Trip.title);
-    if (!checkIfExits) {
-      await prisma.trip.create({ data: Trip });
+  constructor(private readonly database = prisma) {}
+  async createTrip(trip: TripDTO, imagesPath: string[]) {
+    const checkIfExits = await this.getAuthorTripByTitle(trip);
+    if (checkIfExits === null) {
+      trip.pictures = await uploadPhotoArray(imagesPath);
+      await this.database.trip.create({ data: trip });
       return;
     }
     throw new TripError({
-      name: "TRIP_NOT_FOUND",
-      message: "Trip is already in database",
+      name: "INVALID_TRIP",
+      message: "Trip is already in database, check in actual or try change title :)",
     });
   }
-  static async updateTripByTitle(title: string, data: Trip) {
-    const itAlreadyExist = await this.getTripByTitle(title);
+  async getUserTripsAll(userId: string) {
+    const userTrips = await prisma.trip.findMany({
+      where: {
+        OR: [{ authorTripId: userId }, { UserToTrip: { some: { userId } } }],
+      },
+    });
+    return userTrips;
+  }
+  async getUserTripsAcual(userId: string) {
+    const userTrips = await prisma.trip.findMany({
+      where: {
+        OR: [{ authorTripId: userId }, { UserToTrip: { some: { userId } } }],
+        AND: [{ isInProgress: true }],
+      },
+    });
+    return userTrips;
+  }
+  async getUserTripsPropositions(userId: string) {
+    const userTrips = await prisma.trip.findMany({
+      where: {
+        OR: [{ authorTripId: userId }, { UserToTrip: { some: { userId } } }],
+        AND: [{ published: true }],
+      },
+    });
+    return userTrips;
+  }
+  async updateTripByUuid(trip: TripDTO, imagesPath: string[]) {
+    if (!trip.uuid) {
+      throw new TripError({ name: "UPDATE_TRIP_ERROR", message: "No trip id provided" });
+    }
+    const itAlreadyExist = await this.getTripByUuid(trip.uuid);
     if (itAlreadyExist === null) {
       throw new TripError({ name: "UPDATE_TRIP_ERROR", message: "Trip don't exist" });
     }
-    await prisma.trip.update({
+    trip.pictures = await uploadPhotoArray(imagesPath);
+    await this.database.trip.create({ data: trip });
+
+    await this.database.trip.update({
       where: {
-        title: title,
+        uuid: trip.uuid,
       },
       data: {
-        title: data.title,
-        Place: data.Place,
-        likes: data.likes,
-        category: data.category,
-        views: data.views,
-        published: data.published,
-        attractions: data.attractions,
-        pictures: data.pictures,
+        title: trip.title,
+        place: trip.place,
+        category: trip.category,
+        views: trip.views,
+        published: trip.published,
+        attractions: trip.attractions,
+        pictures: trip.pictures,
       },
     });
   }
-  static async getAllTrips() {
-    return await prisma.trip.findMany();
+  async getAllTrips() {
+    return await this.database.trip.findMany();
   }
-  static async deleteTripFromDb(tripName: string) {
-    const TripToDelete = await this.getTripByTitle(tripName);
+  async getPublishedTrips() {}
+  async getAcualTrips(uuid: string) {
+    this.database.trip.findMany({ where: {} });
+  }
+  async deleteTripByUuid(uuid: string) {
+    const TripToDelete = await this.getTripByUuid(uuid);
 
     if (TripToDelete) {
-      await prisma.trip.delete({
+      await this.database.trip.delete({
         where: {
-          title: tripName,
+          uuid: uuid,
         },
       });
       return;
@@ -54,9 +92,16 @@ export class TripService {
       message: "Trip isn't in database",
     });
   }
-  static async getTripByTitle(tripName: string) {
-    return await prisma.trip.findUnique({
-      where: { title: tripName },
+  async getTripByUuid(uuid: string) {
+    const trip = await this.database.trip.findUnique({
+      where: { uuid: uuid },
     });
+    return trip;
+  }
+  async getAuthorTripByTitle(trip: TripDTO) {
+    const tripToReturn = await this.database.trip.findUnique({
+      where: { title: trip.title },
+    });
+    return tripToReturn;
   }
 }

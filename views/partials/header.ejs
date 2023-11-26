@@ -1,0 +1,33 @@
+<!-- Pasek nawigacyjny -->
+<header class="navbarhead fixed-top" id="navbar">
+  <div class="navbar-content">
+    <a href="/">
+      <img src="/logo.png" alt="Logo" class="logo" />
+    </a>
+    <nav class="nav-links">
+      <% if (authData.authenticated) { %>
+      <a href="/api/trips/propostrue"
+        ><img src="/calendar.png" title="Propositions" class="nav-button"
+      /></a>
+      <a href="/api/trips/proposfalse"
+        ><img src="/trees.png" title="Compleated Trips" class="nav-button"
+      /></a>
+      <a href="/api/friends/<%= authData.uuid %>"
+        ><img src="/contact-book.png" title="Friends" class="nav-button"
+      /></a>
+      <a href="/api/my-profile"
+        ><img src="/spanner.png" title="Settings" class="nav-button"
+      /></a>
+    </nav>
+
+    <a href="/logout">
+      <img src="/logout.png" class="logout-button top-right-button"
+    /></a>
+    <!-- Przycisk wylogowania z ładnym stylem -->
+    <% } else { %>
+    <a href="/login"> <img src="/login.png" class="login-button top-right-button" /></a>
+    <!-- Przycisk logowania z ładnym stylem -->
+    <% } %>
+  </div>
+</header>
+<script src="/js/navbar.js"></script>

@@ -9,11 +9,12 @@ datasource db {
 
 model User {
   uuid        String       @id @default(uuid())
-  name        String
-  dateOfBirth Int?
+  firstName   String
+  lastName    String
+  dateOfBirth DateTime?
   email       String       @unique
-  phoneNumber String?      @unique
-  password    String
+  phoneNumber String       @unique
+  picture     String?
   createdAt   DateTime     @default(now())
   updatedAt   DateTime     @updatedAt
   role        Role         @default(USER)
@@ -21,6 +22,20 @@ model User {
   Comment     Comment[]
   UserToTrip  UserToTrip[]
   expenses    Expenses[]
+  likedTrips  Like[]
+  friends     Friendship[] @relation("UserFriends")
+  friendOf    Friendship[] @relation("UserFriendOf")
+}
+
+model Friendship {
+  id       Int    @id @default(autoincrement())
+  status   String
+  user     User   @relation("UserFriends", fields: [userId], references: [uuid])
+  userId   String
+  friend   User   @relation("UserFriendOf", fields: [friendId], references: [uuid])
+  friendId String
+
+  @@unique([userId, friendId])
 }
 
 enum Role {
@@ -31,7 +46,7 @@ enum Role {
 model Trip {
   uuid         String       @id @default(uuid())
   title        String       @unique
-  Place        String[]
+  place        String[]
   published    Boolean      @default(true)
   author       User         @relation(fields: [authorTripId], references: [uuid])
   authorTripId String
@@ -39,19 +54,35 @@ model Trip {
   pictures     String[]
   createdAt    DateTime     @default(now())
   updatedAt    DateTime     @updatedAt
-  DateofTrip   String?
+  startOfTrip  DateTime?
+  endOfTrip    DateTime?
   views        Int          @default(0)
-  likes        Int          @default(0)
-  category     String
+  likes        Like[]
+  category     String[]
   expenses     Expenses[]
   comments     Comment[]
   UserToTrip   UserToTrip[]
+  isInProgress Boolean?     @default(false)
+}
+
+model Like {
+  id        String   @id @default(uuid())
+  userId    String
+  tripId    String
+  createdAt DateTime @default(now())
+
+  // Relacje do użytkownika i wycieczki
+  user User @relation(fields: [userId], references: [uuid])
+  trip Trip @relation(fields: [tripId], references: [uuid])
+
+  @@unique([userId, tripId])
 }
 
 model Expenses {
   id          String   @id @default(uuid())
   amount      Float
   description String
+  picture     String[]
   user        User     @relation(fields: [userId], references: [uuid])
   userId      String
   trip        Trip     @relation(fields: [tripId], references: [uuid])

@@ -1,0 +1,113 @@
+<%- include('layout') %>
+<body>
+  <div class="parallax">
+    <div class="container-user">
+      <h1>
+        <div class="mb-3">
+          <div class="center">
+            <img src="<%= user.picture %>" alt="Profile Picture" class="image" />
+          </div>
+        </div>
+      </h1>
+      <form
+        id="userForm"
+        action="/api/user/update"
+        method="post"
+        enctype="multipart/form-data"
+      >
+        <div class="mb-3">
+          <input
+            type="file"
+            class="form-control"
+            id="image"
+            name="image"
+            accept="image/*"
+            style="display: none"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label for="firstName" class="form-label">First Name:</label>
+          <input
+            type="text"
+            class="form-control"
+            id="firstName"
+            name="firstName"
+            value="<%= user.firstName %>"
+            readonly
+          />
+        </div>
+
+        <div class="mb-3">
+          <label for="lastName" class="form-label">Last Name:</label>
+          <input
+            type="text"
+            class="form-control"
+            id="lastName"
+            name="lastName"
+            value="<%= user.lastName %>"
+            readonly
+          />
+        </div>
+
+        <div class="mb-3">
+          <label for="dateOfBirth" class="form-label"
+            >Date of Birth: <%= user.dateOfBirth ? user.dateOfBirth.toLocaleDateString() :
+            'Will you give me the date?' %></label
+          >
+          <input
+            type="date"
+            class="form-control"
+            id="dateOfBirth"
+            name="dateOfBirth"
+            style="display: none"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label for="email" class="form-label">Email:</label>
+          <input
+            type="email"
+            class="form-control"
+            id="email"
+            name="email"
+            value="<%= user.email %>"
+            readonly
+          />
+        </div>
+
+        <div class="mb-3">
+          <label for="phoneNumber" class="form-label">Phone Number:</label>
+          <input
+            type="tel"
+            class="form-control"
+            oninput="validatePhoneNumber(this)"
+            pattern="[0-9]*"
+            id="phoneNumber"
+            name="phoneNumber"
+            value="<%= user.phoneNumber %>"
+            readonly
+          />
+        </div>
+
+        <div class="center">
+          <div class="form-switch mb-3 btn-lg" style="transform: scale(1.8)">
+            <input class="form-check-input" type="checkbox" id="editSwitch" />
+          </div>
+        </div>
+        <div class="center">
+          <button
+            type="submit"
+            id="updateButton"
+            class="btn btn-primary"
+            style="display: none"
+          >
+            Update Profile
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</body>
+<script src="/js/validate-number.js"></script>
+<script src="/js/update-form.js"></script>

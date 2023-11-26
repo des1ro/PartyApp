@@ -1,35 +1,34 @@
-<!DOCTYPE html>
-<html lang="en">
-  <%- include('layout') %>
+<%- include('layout') %>
 
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="/css/styles.css" />
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="/css/trips.css" />
 
-    <title><%= pageTitle %></title>
-  </head>
-  <body>
-    <div class="parallax">
-      <div class="container">
-        <!-- Wycentrowane elementy -->
-        <h1><%= pageTitle %></h1>
-        <p><%= message %></p>
+  <title>Trips</title>
+</head>
+<main>
+  <div class="parallax">
+    <ul class="trips-container">
+      <% trips.forEach((trip) => { %> <% if ((propos == 'propostrue' && trip.published) ||
+      (propos == 'proposfalse' && !trip.published)) { %>
 
-        <!-- Lista tripów -->
-        <ul class="trips-container">
-          <% trips.forEach((trip) => { %>
-          <li class="trip">
-            <a href="./trip/<%= trip.title %>">
-              <!-- Wyświetl zawartość trip -->
-              <h2><%= trip.title %></h2>
-              <p><%= trip.Place.join(', ') %></p>
-              <!-- itd. -->
-            </a>
-          </li>
-          <% }); %>
-        </ul>
-      </div>
-    </div>
-  </body>
-</html>
+      <li class="trip" style="background-image: url('<%= trip.pictures[0] %>')">
+        <a href="/api/trip/<%= trip.uuid %>">
+          <h2><%= trip.title %></h2>
+          <p><%= trip.place.join(', ') %></p>
+        </a>
+      </li>
+      <% } %> <% }); %> <% if (propos == 'propostrue') { %>
+      <li
+        class="trip"
+        style="
+          background-image: url('https://d3rr2gvhjw0wwy.cloudfront.net/uploads/mandators/27199/file-manager/adventure-tourism.jpg');
+        "
+      >
+        <h2><a href="/api/trip-form">Create Trip</a></h2>
+      </li>
+    </ul>
+    <%} %>
+  </div>
+</main>

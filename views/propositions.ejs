@@ -1,0 +1,16 @@
+
+  <%- include('layout') %>
+  </head>
+  <body>
+    <div class="container">
+      <div class="trip">
+        <h2><%= trip.title %></h2>
+        <ul>
+          <% for (const key in trip) { %>
+          <li><strong><%= key %>:</strong> <%= trip[key] %></li>
+          <% } %>
+        </ul>
+      </div>
+    </div>
+  </body>
+
